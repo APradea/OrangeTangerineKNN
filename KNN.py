@@ -9,10 +9,9 @@ import numpy as np
 
 class KNeighbors:
     
-    def __init__(self, k, xtrain, ytrain, xtest):
+    def __init__(self, k, train, xtest):
         self.k = k
-        self.xtrain = xtrain
-        self.ytrain = ytrain 
+        self.train = train
         self.xtest = xtest 
         
     def distance(self, U, V):
@@ -24,10 +23,10 @@ class KNeighbors:
     def getneighbors(self,vecteurtest):
         distances = list()
         neighbors = list()
-        for i in range (len(self.xtrain)): 
-            dist = self.distance(vecteurtest, self.xtrain[i])
-            interm = np.append(self.xtrain[i], self.ytrain[i])
-            distances.append((interm,dist))
+        for i in range (len(self.train)-1): 
+            #Calcule la distance euclidienne entre le Vtest et le i-eme Vtrain 
+            dist = self.distance(vecteurtest, self.train[i])
+            distances.append((self.train[i],dist))
         distances.sort(key=lambda tup: tup[1])
         for i in range (self.k):
             neighbors.append(distances[i][0])

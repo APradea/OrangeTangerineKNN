@@ -22,17 +22,11 @@ test = pd.read_csv("test.csv")
 #         train.label[i] = 'Tangerine'
 
 
-        
-ytrain = np.array(train.label)
-xtrain=np.array(train[['Fruit Size','Fruit Color','Leaf Size']])
+train = np.array(train[['Fruit Size','Fruit Color','Leaf Size','label']])   
 xtrain_norm = np.zeros((200,2))
 xtest=np.array(test[['Fruit Size','Fruit Color','Leaf Size']])
 
-
-# for i in range (len(xtrain)):
-#     xtrain_norm[i,0]= (xtrain[i,0] - np.mean(xtrain[:,0]))/np.std(xtrain[:,0])
-#     xtrain_norm[i,1]= (xtrain[i,1] - np.mean(xtrain[:,1]))/np.std(xtrain[:,1])
-
+    
 # orange = np.zeros((200,2))        
 # tangerine = np.zeros((200,2))  
 # for i in range (len(train.label)):
@@ -48,7 +42,7 @@ xtest=np.array(test[['Fruit Size','Fruit Color','Leaf Size']])
 # plt.show()
 
 
-kn=KNeighbors(3, xtrain, ytrain, xtest)
+kn=KNeighbors(3, train, xtest)
 neighbors= kn.predict(xtest[0])
 
 predict=list()
@@ -56,3 +50,10 @@ for x in xtest:
     pred = kn.predict(x)
     predict.append(pred)
 predict = np.array(predict)
+prediction = []
+for i in range (len(predict)):
+    if predict[i] == 0:
+        prediction.append('Orange')
+    else: 
+        prediction.append('Tangerine')
+
